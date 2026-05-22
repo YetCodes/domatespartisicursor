@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ cms.nav_promises }} — {{ cms.party_short }}{% endblock %}
+
+{% block content %}
+<section class="section-pad" style="padding-top:6rem;">
+  <div class="container">
+    <h1 class="section-title reveal">Partimizin Amaç ve Vaatleri</h1>
+    <div class="vision-block reveal">{{ cms.vision_text }}</div>
+
+    <h2 class="section-title reveal">Vaatlerimiz</h2>
+    {% for p in promises %}
+    <details class="promise-item reveal">
+      <summary>{{ p.title }}</summary>
+      <div class="promise-body">{{ p.body }}</div>
+    </details>
+    {% endfor %}
+
+    <div class="admin-only glass-card reveal" style="margin-top:2rem;">
+      <h3>Genel Başkan: Yeni Vaat Ekle</h3>
+      <div class="form-row"><input type="text" id="new-promise-title" placeholder="Başlık"></div>
+      <div class="form-row"><textarea id="new-promise-body" rows="3" placeholder="Açıklama"></textarea></div>
+      <button type="button" class="btn btn-premium" id="inline-promise-add">Ekle</button>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{% if is_chairman %}
+<script>
+document.getElementById('inline-promise-add')?.addEventListener('click', async () => {
+  await fetch('/api/admin/promises', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      action: 'add',
+      title: document.getElementById('new-promise-title').value,
+      body: document.getElementById('new-promise-body').value
+    })
+  });
+  location.reload();
+});
+</script>
+{% endif %}
+{% endblock %}

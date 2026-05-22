@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% block title %}Genel Başkan Paneli — {{ cms.party_short }}{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chairman-panel.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="section-pad" style="padding-top:5.5rem;">
+  <div class="container">
+    <h1 class="section-title">Genel Başkan Paneli</h1>
+    <p style="margin-bottom:1.5rem;">Siteyi baştan sona buradan yönetin: metin, menü, bölüm gizleme, fotoğraf, haber, gündem, üye rütbesi. <strong>Yalnızca siz</strong> bu panele erişebilirsiniz.</p>
+
+    <div class="chairman-dashboard">
+      <nav class="chairman-tabs" aria-label="Yönetim sekmeleri">
+        <button type="button" class="chairman-tab-btn active" data-panel="panel-site">Site & Menü</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-hero">Manşet</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-news">Haberler</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-agenda">Gündem</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-blocks">Basın & Etkinlik</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-media">Medya</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-promises">Vaatler</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-members">Üyeler & Rütbe</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-org">Kadrolar</button>
+        <button type="button" class="chairman-tab-btn" data-panel="panel-other">Şikayet & Bildirim</button>
+      </nav>
+
+      <div class="chairman-panels">
+        <!-- SITE -->
+        <div id="panel-site" class="chairman-panel active">
+          <div class="cms-card">
+            <h4>Parti kimliği</h4>
+            <div class="form-row"><label>Parti adı</label><input type="text" id="cms-party_name" value="{{ cms.party_name }}"></div>
+            <div class="form-row"><label>Kısaltma</label><input type="text" id="cms-party_short" value="{{ cms.party_short }}"></div>
+            <div class="form-row"><label>Genel Başkan adı (sitede görünen)</label><input type="text" id="cms-chairman" value="{{ cms.chairman }}"></div>
+            <div class="form-row"><label>Vizyon metni</label><textarea id="cms-vision_text" rows="4">{{ cms.vision_text }}</textarea></div>
+          </div>
+          <div class="cms-card">
+            <h4>Menü isimleri</h4>
+            <div class="form-row"><label>Ana Sayfa</label><input id="cms-nav_home" value="{{ cms.nav_home }}"></div>
+            <div class="form-row"><label>Haberler</label><input id="cms-nav_news" value="{{ cms.nav_news|default('Haberler') }}"></div>
+            <div class="form-row"><label>Şikayet</label><input id="cms-nav_complaint" value="{{ cms.nav_complaint }}"></div>
+            <div class="form-row"><label>Üye Listesi</label><input id="cms-nav_members" value="{{ cms.nav_members }}"></div>
+            <div class="form-row"><label>Amaç ve Vaatler</label><input id="cms-nav_promises" value="{{ cms.nav_promises }}"></div>
+            <div class="form-row"><label>Kadrolar</label><input id="cms-nav_org" value="{{ cms.nav_org }}"></div>
+          </div>
+          <div class="cms-card">
+            <h4>Buton metinleri</h4>
+            <div class="form-row"><label>Üye Ol</label><input id="cms-cta_member" value="{{ cms.cta_member }}"></div>
+            <div class="form-row"><label>Bağış Yap</label><input id="cms-cta_donate" value="{{ cms.cta_donate|default('Bağış Yap') }}"></div>
+            <div class="form-row"><label>Gönüllü Ol</label><input id="cms-cta_volunteer" value="{{ cms.cta_volunteer }}"></div>
+          </div>
+          <div class="cms-card">
+            <h4>Genel Başkan mesajı (ana sayfa kutusu)</h4>
+            <div class="form-row"><label>Başlık</label><input id="cms-chairman_message_title" value="{{ cms.chairman_message_title|default('') }}"></div>
+            <div class="form-row"><label>Metin</label><textarea id="cms-chairman_message_body" rows="3">{{ cms.chairman_message_body|default('') }}</textarea></div>
+            <div class="form-row"><label>DOP TV başlık</label><input id="cms-dop_tv_title" value="{{ cms.dop_tv_title|default('DOP TV') }}"></div>
+            <div class="form-row"><label>DOP TV açıklama</label><input id="cms-dop_tv_description" value="{{ cms.dop_tv_description|default('') }}"></div>
+          </div>
+          <div class="cms-card">
+            <h4>Ana sayfa bölümleri (kapat = siteden tamamen kalkar)</h4>
+            <div class="section-toggles">
+              <label class="section-toggle"><input type="checkbox" class="section-cb" data-key="section_show_hero" {% if cms.section_show_hero|default('1') != '0' %}checked{% endif %}> Manşet / Hero</label>
+              <label class="section-toggle"><input type="checkbox" class="section-cb" data-key="section_show_bento" {% if cms.section_show_bento|default('1') != '0' %}checked{% endif %}> Haber Bento</label>
+              <label class="section-toggle"><input type="checkbox" class="section-cb" data-key="section_show_press" {% if cms.section_show_press|default('1') != '0' %}checked{% endif %}> Basın açıklamaları</label>
+              <label class="section-toggle"><input type="checkbox" class="section-cb" data-key="section_show_events" {% if cms.section_show_events|default('1') != '0' %}checked{% endif %}> Miting takvimi</label>
+              <label class="section-toggle"><input type="checkbox" class="section-cb" data-key="section_show_media" {% if cms.section_show_media|default('1') != '0' %}checked{% endif %}> Medya galerisi</label>
+              <label class="section-toggle"><input type="checkbox" class="section-cb" data-key="section_show_vision" {% if cms.section_show_vision|default('1') != '0' %}checked{% endif %}> Vizyon bölümü</label>
+            </div>
+          </div>
+          <button type="button" class="btn btn-premium" id="cms-save-all">Tüm site ayarlarını kaydet</button>
+        </div>
+
+        <!-- HERO -->
+        <div id="panel-hero" class="chairman-panel">
+          {% for s in slides %}
+          <div class="cms-card" data-slide-id="{{ s.id }}">
+            <h4>Manşet #{{ s.id }}</h4>
+            {% if s.image_url %}<img src="{{ s.image_url }}" class="preview-thumb" alt="">{% endif %}
+            <div class="form-row"><label>Görsel URL</label><input class="slide-image" value="{{ s.image_url }}"></div>
+            <input type="file" class="upload-file" accept="image/*" data-target=".slide-image">
+            <div class="form-row"><label>Başlık</label><input class="slide-headline" value="{{ s.headline }}"></div>
+            <div class="cms-card-actions">
+              <button type="button" class="btn btn-premium slide-update" data-id="{{ s.id }}">Kaydet</button>
+              <button type="button" class="btn btn-danger-soft slide-delete" data-id="{{ s.id }}">Bu manşeti sil</button>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="cms-card">
+            <h4>Yeni manşet ekle</h4>
+            <input id="new-slide-url" placeholder="URL veya aşağıdan yükle">
+            <input type="file" id="new-slide-file" accept="image/*" data-target="#new-slide-url">
+            <input id="new-slide-headline" placeholder="Manşet yazısı" style="margin-top:0.5rem;width:100%;">
+            <button type="button" class="btn btn-premium" id="new-slide-add" style="margin-top:0.75rem;">Ekle</button>
+          </div>
+        </div>
+
+        <!-- NEWS -->
+        <div id="panel-news" class="chairman-panel">
+          {% for n in news %}
+          <div class="cms-card">
+            {% if n.image_url %}<img src="{{ n.image_url }}" class="preview-thumb">{% endif %}
+            <input class="news-title" data-id="{{ n.id }}" value="{{ n.title }}" placeholder="Başlık">
+            <input class="news-excerpt" data-id="{{ n.id }}" value="{{ n.excerpt }}" placeholder="Özet">
+            <input class="news-image" data-id="{{ n.id }}" value="{{ n.image_url }}">
+            <input type="file" class="upload-file" accept="image/*" data-target=".news-image[data-id='{{ n.id }}']">
+            <div class="cms-card-actions">
+              <button class="btn btn-premium news-update" data-id="{{ n.id }}">Kaydet</button>
+              <button class="btn btn-danger-soft news-delete" data-id="{{ n.id }}">Sil</button>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="cms-card">
+            <h4>Yeni haber</h4>
+            <input id="new-news-title" placeholder="Başlık">
+            <input id="new-news-excerpt" placeholder="Özet">
+            <input id="new-news-image" placeholder="Görsel URL">
+            <input type="file" id="new-news-file" accept="image/*" data-target="#new-news-image">
+            <button class="btn btn-premium" id="new-news-add">Haber ekle</button>
+          </div>
+        </div>
+
+        <!-- AGENDA -->
+        <div id="panel-agenda" class="chairman-panel">
+          {% for a in agenda %}
+          <div class="cms-card">
+            {% if a.image_url %}<img src="{{ a.image_url }}" class="preview-thumb">{% endif %}
+            <input class="agenda-title" data-id="{{ a.id }}" value="{{ a.title }}">
+            <textarea class="agenda-body" data-id="{{ a.id }}" rows="2">{{ a.body }}</textarea>
+            <input class="agenda-image" data-id="{{ a.id }}" value="{{ a.image_url }}">
+            <input type="file" class="upload-file" accept="image/*" data-target=".agenda-image[data-id='{{ a.id }}']">
+            <div class="cms-card-actions">
+              <button class="btn btn-premium agenda-update" data-id="{{ a.id }}">Kaydet</button>
+              <button class="btn btn-danger-soft agenda-delete" data-id="{{ a.id }}">Sil</button>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="cms-card">
+            <h4>Yeni gündem maddesi</h4>
+            <input id="new-agenda-title" placeholder="Başlık">
+            <textarea id="new-agenda-body" rows="2"></textarea>
+            <input id="new-agenda-image" placeholder="Görsel URL">
+            <input type="file" id="new-agenda-file" accept="image/*" data-target="#new-agenda-image">
+            <button class="btn btn-premium" id="new-agenda-add">Ekle</button>
+          </div>
+        </div>
+
+        <!-- PRESS EVENTS -->
+        <div id="panel-blocks" class="chairman-panel">
+          <div class="cms-card"><h4>Basın açıklamaları</h4>
+            {% for p in press %}
+            <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #eee;">
+              <input class="press-title" data-id="{{ p.id }}" value="{{ p.title }}">
+              <textarea class="press-body" data-id="{{ p.id }}" rows="2">{{ p.body }}</textarea>
+              <button class="btn btn-glass press-update" data-id="{{ p.id }}">Kaydet</button>
+              <button class="btn btn-danger-soft press-delete" data-id="{{ p.id }}">Sil</button>
+            </div>
+            {% endfor %}
+            <input id="new-press-title" placeholder="Başlık"><textarea id="new-press-body" rows="2"></textarea>
+            <button class="btn btn-premium" id="new-press-add">Basın ekle</button>
+          </div>
+          <div class="cms-card"><h4>Etkinlik / miting</h4>
+            {% for e in events %}
+            <div style="margin-bottom:0.75rem;">
+              <input class="event-title" data-id="{{ e.id }}" value="{{ e.title }}">
+              <input class="event-loc" data-id="{{ e.id }}" value="{{ e.location }}" placeholder="Şehir">
+              <input class="event-date" data-id="{{ e.id }}" value="{{ e.event_date }}">
+              <button class="btn btn-glass event-update" data-id="{{ e.id }}">Kaydet</button>
+              <button class="btn btn-danger-soft event-delete" data-id="{{ e.id }}">Sil</button>
+            </div>
+            {% endfor %}
+            <input id="new-event-title" placeholder="Etkinlik"><input id="new-event-loc" placeholder="Yer"><input id="new-event-date" placeholder="YYYY-MM-DD">
+            <button class="btn btn-premium" id="new-event-add">Etkinlik ekle</button>
+          </div>
+        </div>
+
+        <!-- MEDIA -->
+        <div id="panel-media" class="chairman-panel">
+          {% for m in media %}
+          <div class="cms-card">
+<<<<<<< HEAD
+            {% if m.media_type == 'photo' %}
+              <img src="{{ m.image_url }}" class="preview-thumb">
+            {% else %}
+              <div style="background:#000;color:#fff;padding:1rem;border-radius:12px;margin-bottom:1rem;font-size:0.85rem;word-break:break-all;">Video: {{ m.video_url }}</div>
+            {% endif %}
+            <div class="form-row"><label>Başlık</label><input class="media-title" data-id="{{ m.id }}" value="{{ m.title }}"></div>
+            <div class="form-row"><label>Türü</label>
+              <select class="media-type" data-id="{{ m.id }}">
+                <option value="photo" {% if m.media_type == 'photo' %}selected{% endif %}>Fotoğraf</option>
+                <option value="video" {% if m.media_type == 'video' %}selected{% endif %}>Video</option>
+              </select>
+            </div>
+            <div class="form-row"><label>Görsel URL (Sadece fotoğraf için)</label><input class="media-image" data-id="{{ m.id }}" value="{{ m.image_url }}"></div>
+            <div class="form-row"><label>Video URL (Sadece YouTube/Cloudinary Dış Link)</label><input class="media-video" data-id="{{ m.id }}" value="{{ m.video_url|default('') }}"></div>
+            <input type="file" class="upload-file" accept="image/*" data-target=".media-image[data-id='{{ m.id }}']">
+            <div class="cms-card-actions" style="margin-top:1rem;">
+              <button class="btn btn-premium media-update" data-id="{{ m.id }}">Kaydet</button>
+              <button class="btn btn-danger-soft media-delete" data-id="{{ m.id }}">Sil</button>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="cms-card">
+            <h4>Yeni medya ekle</h4>
+            <div class="form-row"><label>Başlık</label><input id="new-media-title" placeholder="Başlık"></div>
+            <div class="form-row"><label>Türü</label>
+              <select id="new-media-type">
+                <option value="photo">Fotoğraf</option>
+                <option value="video">Video</option>
+              </select>
+            </div>
+            <div class="form-row"><label>Görsel URL</label><input id="new-media-image" placeholder="Görsel URL (Fotoğraf seçildiyse)"></div>
+            <div class="form-row"><label>Video URL</label><input id="new-media-video" placeholder="Video URL (YouTube veya Cloudinary)"></div>
+            <input type="file" id="new-media-file" accept="image/*" data-target="#new-media-image">
+            <button class="btn btn-premium" id="new-media-add" style="margin-top:0.75rem;">Medya ekle</button>
+
+          </div>
+        </div>
+
+        <!-- PROMISES -->
+        <div id="panel-promises" class="chairman-panel">
+          {% for p in promises %}
+          <div class="cms-card">
+            <input class="promise-title" data-id="{{ p.id }}" value="{{ p.title }}">
+            <textarea class="promise-body" data-id="{{ p.id }}" rows="2">{{ p.body }}</textarea>
+            <div class="cms-card-actions">
+              <button class="btn btn-premium promise-update" data-id="{{ p.id }}">Kaydet</button>
+              <button class="btn btn-danger-soft promise-delete" data-id="{{ p.id }}">Sil</button>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="cms-card">
+            <input id="new-promise-title" placeholder="Vaat başlığı">
+            <textarea id="new-promise-body" rows="2"></textarea>
+            <button class="btn btn-premium" id="new-promise-add">Vaat ekle</button>
+          </div>
+        </div>
+
+        <!-- MEMBERS -->
+        <div id="panel-members" class="chairman-panel">
+          <div class="cms-card">
+            <h4>Kayıtlı kişiler — rütbe değiştir</h4>
+            <p style="font-size:0.88rem;color:var(--text-muted);">Üye, Yetkili veya Vatandaş yapabilirsiniz. Genel Başkan atanamaz; kimse kendi rütbesini yükseltemez.</p>
+            <table class="members-table">
+              <thead><tr><th>Ad</th><th>Soyad</th><th>Kullanıcı</th><th>Rütbe</th></tr></thead>
+              <tbody>
+                {% for u in all_users %}
+                <tr>
+                  <td>{{ u.first_name }}</td>
+                  <td>{{ u.last_name }}</td>
+                  <td>@{{ u.username }}</td>
+                  <td>
+                    {% if u.role == 'admin' %}
+                    <strong>Genel Başkan</strong>
+                    {% else %}
+                    <select class="panel-role-select" data-user-id="{{ u.id }}" data-current="{{ u.role }}">
+                      <option value="member" {% if u.role=='member' %}selected{% endif %}>Üye</option>
+                      <option value="official" {% if u.role=='official' %}selected{% endif %}>Yetkili</option>
+                      <option value="citizen" {% if u.role=='citizen' %}selected{% endif %}>Vatandaş</option>
+                    </select>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ORG -->
+        <div id="panel-org" class="chairman-panel">
+          <div class="cms-card">
+            <h4>Kadro yönetimi</h4>
+            <p>Detaylı organizasyon şeması için <a href="{{ url_for('org_chart') }}">Kadrolar sayfasına</a> gidin (ekle / sil / düzenle orada da yapılır).</p>
+            <div class="form-row"><label>Üst makam ID</label><input type="number" id="org-parent-id" placeholder="Boş = kök altı"></div>
+            <div class="form-row"><label>Makam adı</label><input id="org-title"></div>
+            <div class="form-row"><label>Üye seç</label>
+              <select id="org-member-id">
+                <option value="">Manuel isim</option>
+                {% for m in member_options %}<option value="{{ m.id }}">{{ m.label }}</option>{% endfor %}
+              </select>
+            </div>
+            <div class="form-row"><label>İsim (manuel)</label><input id="org-person-name"></div>
+            <div class="form-row"><label>Açıklama</label><textarea id="org-description" rows="2"></textarea></div>
+            <button type="button" class="btn btn-premium" id="org-add-btn">Kadroya ekle</button>
+          </div>
+        </div>
+
+        <!-- OTHER -->
+        <div id="panel-other" class="chairman-panel">
+          <div class="cms-card">
+            <h4>Bildirimler</h4>
+            <ul>{% for n in notifications %}<li>[{{ n.type }}] {{ n.message }}</li>{% else %}<li>Yok</li>{% endfor %}</ul>
+            <button class="btn btn-glass" id="mark-notifications-read">Okundu işaretle</button>
+          </div>
+          <div class="cms-card">
+            <h4>Şikayetler</h4>
+            <table class="members-table">
+              <thead><tr><th>ID</th><th>Kimlik</th><th>Öncelik</th><th>Metin</th></tr></thead>
+              <tbody>
+                {% for c in complaints %}
+                <tr><td>{{ c.id }}</td><td>{{ c.identity_type }}</td><td>{{ c.priority }}</td><td>{{ c.body[:60] }}…</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/chairman-panel.js') }}" defer></script>
+{% endblock %}

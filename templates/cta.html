@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — {{ cms.party_short }}{% endblock %}
+
+{% block content %}
+<section class="section-pad" style="padding-top:7rem;">
+  <div class="container" style="max-width:560px;">
+    <h1 class="section-title reveal">{{ title }}</h1>
+    <div class="glass-card reveal">
+      <p>{{ subtitle|default('Domates Partisi\'ne katılım ve destek kanalları.') }}</p>
+      <p><strong>Genel Başkan:</strong> {{ cms.chairman }}</p>
+      <a href="{{ url_for('login') }}" class="btn btn-premium" style="margin-top:1rem;">Giriş Yap</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

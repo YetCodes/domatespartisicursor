@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Üyelik Başvurusu — {{ cms.party_short }}{% endblock %}
+
+{% block content %}
+<section class="section-pad" style="padding-top:7rem;">
+  <div class="container" style="max-width:520px;">
+    <h1 class="section-title reveal">Domates Partisi'ne Katıl</h1>
+    <p class="reveal" style="color:var(--text-muted);margin-bottom:1.5rem;">
+      Aşağıdaki form ile parti üyeliğinizi oluşturun. Kayıt sonrası otomatik giriş yapılır;
+      adınız <strong>Üye Listesi</strong>'nde (soyadınız KVKK gereği maskelenmiş) görünür.
+      Genel Başkan sizi <strong>Kadrolar</strong> bölümüne atayabilir.
+    </p>
+
+    <form method="post" class="glass-card reveal auth-form">
+      <div class="form-row">
+        <label for="first_name">Ad *</label>
+        <input type="text" id="first_name" name="first_name" required autocomplete="given-name">
+      </div>
+      <div class="form-row">
+        <label for="last_name">Soyad *</label>
+        <input type="text" id="last_name" name="last_name" required autocomplete="family-name">
+      </div>
+      <div class="form-row">
+        <label for="username">Kullanıcı adı *</label>
+        <input type="text" id="username" name="username" required pattern="[a-z0-9_]{3,32}" autocomplete="username" placeholder="ör. ahmet_yilmaz">
+        <small style="color:var(--text-muted);">Küçük harf, rakam ve alt çizgi (3-32 karakter)</small>
+      </div>
+      <div class="form-row">
+        <label for="email">E-posta (isteğe bağlı)</label>
+        <input type="email" id="email" name="email" autocomplete="email">
+      </div>
+      <div class="form-row">
+        <label for="password">Şifre *</label>
+        <input type="password" id="password" name="password" required minlength="6" autocomplete="new-password">
+      </div>
+      <div class="form-row">
+        <label for="password_confirm">Şifre tekrar *</label>
+        <input type="password" id="password_confirm" name="password_confirm" required minlength="6" autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn btn-premium" style="width:100%;justify-content:center;margin-top:0.5rem;">
+        Üyeliği Tamamla
+      </button>
+    </form>
+
+    <p class="reveal" style="text-align:center;margin-top:1.25rem;">
+      Zaten üye misiniz? <a href="{{ url_for('login') }}"><strong>Giriş yapın</strong></a>
+    </p>
+  </div>
+</section>
+{% endblock %}

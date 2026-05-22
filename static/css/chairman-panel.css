@@ -1,0 +1,110 @@
+.chairman-dashboard {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.chairman-tabs {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.chairman-tab-btn {
+  text-align: left;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  color: var(--text-dark);
+  transition: background 0.2s, color 0.2s;
+}
+
+.chairman-tab-btn:hover,
+.chairman-tab-btn.active {
+  background: linear-gradient(135deg, var(--blood-wine), var(--blood-wine-light));
+  color: white;
+}
+
+.chairman-panel {
+  display: none;
+}
+
+.chairman-panel.active {
+  display: block;
+}
+
+.cms-card {
+  background: var(--surface);
+  border: 1px solid rgba(114, 0, 23, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.cms-card h4 {
+  margin: 0 0 1rem;
+  color: var(--blood-wine);
+  font-size: 1rem;
+}
+
+.cms-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.section-toggles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem;
+  background: white;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(114, 0, 23, 0.15);
+  font-size: 0.9rem;
+}
+
+.btn-danger-soft {
+  background: #8b2635;
+  color: white;
+  border: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.preview-thumb {
+  max-width: 120px;
+  max-height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .chairman-dashboard {
+    grid-template-columns: 1fr;
+  }
+  .chairman-tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: static;
+  }
+}

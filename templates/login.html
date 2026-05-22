@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Giriş — {{ cms.party_short }}{% endblock %}
+
+{% block content %}
+<section class="section-pad" style="padding-top:7rem;">
+  <div class="container" style="max-width:420px;">
+    <h1 class="section-title reveal">Giriş Yap</h1>
+    <p class="reveal" style="color:var(--text-muted);margin-bottom:1.25rem;">
+      Kayıtlı üyeler ve Genel Başkan hesabı ile giriş yapabilirsiniz.
+    </p>
+
+    <form method="post" class="glass-card reveal auth-form">
+      <div class="form-row">
+        <label for="username">Kullanıcı adı</label>
+        <input type="text" id="username" name="username" required autocomplete="username">
+      </div>
+      <div class="form-row">
+        <label for="password">Şifre</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-premium" style="width:100%;justify-content:center;">Giriş Yap</button>
+    </form>
+
+    <p class="reveal" style="text-align:center;margin-top:1.25rem;">
+      Henüz üye değil misiniz? <a href="{{ url_for('register_member') }}"><strong>Üye olun</strong></a>
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{ cms.nav_members }} — {{ cms.party_short }}{% endblock %}
+
+{% block content %}
+<section class="section-pad" style="padding-top:6rem;">
+  <div class="container">
+    <h1 class="section-title">{{ cms.nav_members }}</h1>
+    <p>Domates Partisi'ne kayıtlı gerçek üyeler. Ad ve soyadlar tam olarak listelenir.</p>
+
+    <table class="members-table">
+      <thead>
+        <tr>
+          <th>Ad</th>
+          <th>Soyad</th>
+          <th>Kullanıcı adı</th>
+          <th>Rütbe</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in members_list %}
+        <tr>
+          <td>{{ m.first_name }}</td>
+          <td>{{ m.last_name }}</td>
+          <td>@{{ m.username }}</td>
+          <td>
+            {% if is_chairman and not m.is_chairman_row %}
+            <select class="member-role-select" data-user-id="{{ m.id }}" data-current="{{ m.role }}">
+              {% for r in ['member', 'official', 'citizen'] %}
+              <option value="{{ r }}" {% if m.role == r %}selected{% endif %}>
+                {% if r == 'member' %}Üye{% elif r == 'official' %}Yetkili{% else %}Vatandaş{% endif %}
+              </option>
+              {% endfor %}
+            </select>
+            {% else %}
+            <strong>{{ m.role_label }}</strong>
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">Henüz kayıtlı üye yok. <a href="{{ url_for('register_member') }}">İlk üye siz olun</a>.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if is_chairman %}
+    <p style="margin-top:1rem;font-size:0.9rem;color:var(--text-muted);">
+      Genel Başkan olarak buradan üye rütbesini değiştirebilirsiniz (Üye / Yetkili / Vatandaş). Detaylı yönetim:
+      <a href="{{ url_for('admin_panel') }}">Genel Başkan Paneli</a>
+    </p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{% if is_chairman %}
+<script>
+document.querySelectorAll('.member-role-select').forEach(sel => {
+  sel.addEventListener('change', async () => {
+    const res = await fetch('/api/admin/user-role', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ user_id: parseInt(sel.dataset.userId, 10), role: sel.value })
+    });
+    const data = await res.json();
+    if (data.ok) { alert('Rütbe güncellendi.'); location.reload(); }
+    else { alert(data.error || 'Hata'); sel.value = sel.dataset.current; }
+  });
+});
+</script>
+{% endif %}
+{% endblock %}

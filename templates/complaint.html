@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Şikayet — {{ cms.party_short }}{% endblock %}
+{% block body_class %}theme-dark complaint-route{% endblock %}
+
+{% block content %}
+<section class="complaint-page" style="padding-top:6rem;">
+  <div class="container">
+    <h1 class="section-title reveal" style="text-align:center;color:#e8a0a8;border:none;">Şikayet Merkezi</h1>
+    <p class="reveal" style="text-align:center;opacity:0.75;margin-bottom:2rem;">Gizli mod · Kayıtlar şifreli önceliklendirilir</p>
+
+    <div class="complaint-eyes-wrap reveal">
+      <div id="dop-logo">DOP</div>
+      <div id="dop-eyes" aria-hidden="true">
+        <div class="eye" id="eye-left"><div class="pupil"></div></div>
+        <div class="eye" id="eye-right"><div class="pupil"></div></div>
+      </div>
+      <canvas id="flame-canvas" width="220" height="90"></canvas>
+    </div>
+    <canvas id="corner-flame-canvas"></canvas>
+
+    <form class="complaint-form reveal" id="complaint-form">
+      <fieldset class="identity-options">
+        <legend style="margin-bottom:0.75rem;color:#aaa;">Kimlik Türü</legend>
+        <label><input type="radio" name="identity" value="uye"> <span>Üye</span></label>
+        <label><input type="radio" name="identity" value="vatandas" checked> <span>Vatandaş</span></label>
+        <label><input type="radio" name="identity" value="yabanci"> <span>Yabancı Uyruk</span></label>
+        <label><input type="radio" name="identity" value="anonim"> <span>Anonim</span></label>
+      </fieldset>
+
+      <label for="complaint-body" style="color:#aaa;font-size:0.85rem;">Şikayetiniz</label>
+      <textarea id="complaint-body" class="field-minimal" name="body" rows="5" placeholder="Metninizi yazın..." required style="resize:vertical;min-height:120px;"></textarea>
+
+      <p id="priority-hint" style="font-size:0.85rem;opacity:0.65;margin:1rem 0;">Öncelik: <strong id="priority-value">5</strong></p>
+
+      <button type="submit" class="btn btn-premium" style="width:100%;justify-content:center;">Şikayeti Gönder</button>
+    </form>
+  </div>
+</section>
+
+<div class="modal-overlay" id="kurultay-modal" role="dialog" aria-modal="true">
+  <div class="modal-glass">
+    <h3>Kurultay çağrısı yapılsın mı?</h3>
+    <p>Üye şikayetiniz kaydedildi.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-premium" id="kurultay-evet">Evet</button>
+      <button type="button" class="btn btn-glass" id="kurultay-hayir" style="justify-content:center;">Hayır</button>
+      <button type="button" class="btn btn-glass" id="kurultay-baskan" style="justify-content:center;">Genel Başkana Sor</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/complaint.js') }}" defer></script>
+{% endblock %}
