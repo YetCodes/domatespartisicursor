@@ -28,7 +28,7 @@
 {% if cms_visible('section_show_bento') %}
 <section class="section-pad reveal">
   <div class="container">
-    <h2 class="section-title">Güncel Haberler ve Medya</h2>
+    <h2 class="section-title">{{ cms.title_news_section|default('Güncel Haberler ve Medya') }}</h2>
     <div class="bento-grid">
       {% if news %}
       <article class="bento-item bento-large">
@@ -49,7 +49,7 @@
       {% if events %}
       <article class="bento-item">
         <div class="bento-caption bento-glass-text" style="background:var(--surface);color:var(--text-dark);">
-          <h3>Yaklaşan Miting</h3>
+          <h3>{{ cms.title_upcoming_event|default('Yaklaşan Miting') }}</h3>
           <p><strong>{{ events[0].title }}</strong><br>{{ events[0].location }} · {{ events[0].event_date }}</p>
         </div>
       </article>
@@ -74,7 +74,7 @@
       {% endfor %}
     </div>
     <p style="margin-top:1.5rem;text-align:center;">
-      <a href="{{ url_for('news_media') }}" class="btn btn-premium">Tüm Haberler →</a>
+      <a href="{{ url_for('news_media') }}" class="btn btn-premium">{{ cms.btn_all_news|default('Tüm Haberler →') }}</a>
     </p>
   </div>
 </section>
@@ -86,32 +86,32 @@
     <div class="card-grid">
       {% if cms_visible('section_show_press') %}
       <div class="glass-card">
-        <h3 class="section-title" style="margin-top:0;font-size:1.25rem;">Son Basın Açıklamaları</h3>
+        <h3 class="section-title" style="margin-top:0;font-size:1.25rem;">{{ cms.title_press_section|default('Son Basın Açıklamaları') }}</h3>
         <ul class="press-list">
           {% for p in press[:4] %}
           <li><strong>{{ p.title }}</strong><br><small>{{ p.body[:90] }}…</small></li>
           {% else %}
-          <li>Yakında eklenecek.</li>
+          <li>{{ cms.text_empty_press|default('Yakında eklenecek.') }}</li>
           {% endfor %}
         </ul>
       </div>
       {% endif %}
       {% if cms_visible('section_show_events') %}
       <div class="glass-card">
-        <h3 class="section-title" style="margin-top:0;font-size:1.25rem;">Miting Takvimi</h3>
+        <h3 class="section-title" style="margin-top:0;font-size:1.25rem;">{{ cms.title_events_section|default('Miting Takvimi') }}</h3>
         {% for e in events[:4] %}
         <div class="event-card">
           <span class="event-date">{{ e.event_date }}</span>
           <div><strong>{{ e.title }}</strong><br>{{ e.location }}</div>
         </div>
         {% else %}
-        <p>Etkinlik takvimi güncelleniyor.</p>
+        <p>{{ cms.text_empty_events|default('Etkinlik takvimi güncelleniyor.') }}</p>
         {% endfor %}
       </div>
       {% endif %}
       {% if cms_visible('section_show_media') %}
       <div class="glass-card">
-        <h3 class="section-title" style="margin-top:0;font-size:1.25rem;">Medya Galerisi</h3>
+        <h3 class="section-title" style="margin-top:0;font-size:1.25rem;">{{ cms.title_media_section|default('Medya Galerisi') }}</h3>
         <div class="media-grid">
           {% for m in media[:4] %}
           <div class="media-card">
@@ -141,9 +141,9 @@
 {% if cms_visible('section_show_vision') %}
 <section class="section-pad reveal">
   <div class="container">
-    <h2 class="section-title">Parti Vizyonu</h2>
+    <h2 class="section-title">{{ cms.title_vision_section|default('Parti Vizyonu') }}</h2>
     <div class="vision-block">{{ cms.vision_text }}</div>
-    <a href="{{ url_for('promises_page') }}" class="btn btn-premium">Amaç ve Vaatler →</a>
+    <a href="{{ url_for('promises_page') }}" class="btn btn-premium">{{ cms.btn_all_promises|default('Amaç ve Vaatler →') }}</a>
   </div>
 </section>
 {% endif %}

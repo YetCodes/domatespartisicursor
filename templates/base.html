@@ -16,9 +16,13 @@
   <div class="floating-nav-wrap" id="floating-nav">
     <header class="floating-nav">
       <a href="{{ url_for('index') }}" class="brand">
-        <span class="brand-logo">DOP</span>
+        {% if cms.logo_url %}
+        <img src="{{ cms.logo_url }}" alt="Logo" class="brand-logo-img" style="height:32px; object-fit:contain; border-radius:4px;">
+        {% else %}
+        <span class="brand-logo">{{ cms.party_short[:3] }}</span>
+        {% endif %}
         <span>{{ cms.party_short }}</span>
-        {% if is_chairman %}<span class="chairman-badge">Genel Başkan</span>{% endif %}
+        {% if is_chairman %}<span class="chairman-badge">{{ cms.text_chairman_badge|default('Genel Başkan') }}</span>{% endif %}
       </a>
       <nav>
         <ul class="main-nav" id="main-nav">
@@ -63,20 +67,20 @@
   <div id="congress-banner" class="congress-banner" aria-live="polite">
     <div class="congress-banner-inner container">
       <div>
-        <strong>Kurultay Çağrısı</strong>
-        <p style="margin: 0.25rem 0 0; font-size: 0.9rem;">Kurultay kararı için %61 evet oyu gerekir.</p>
+        <strong>{{ cms.title_congress|default('Kurultay Çağrısı') }}</strong>
+        <p style="margin: 0.25rem 0 0; font-size: 0.9rem;">{{ cms.text_congress_desc|default('Kurultay kararı için %61 evet oyu gerekir.') }}</p>
       </div>
       <div style="display: flex; gap: 0.5rem;">
-        <button type="button" class="btn btn-premium" id="congress-vote-yes">Evet</button>
-        <button type="button" class="btn btn-outline-light" id="congress-vote-no">Hayır</button>
+        <button type="button" class="btn btn-premium" id="congress-vote-yes">{{ cms.btn_congress_yes|default('Evet') }}</button>
+        <button type="button" class="btn btn-outline-light" id="congress-vote-no">{{ cms.btn_congress_no|default('Hayır') }}</button>
       </div>
     </div>
   </div>
 
   <footer class="site-footer">
     <div class="container">
-      <p><strong>{{ cms.party_name }}</strong> — Genel Başkan: {{ cms.chairman }}</p>
-      <p>© {{ cms.party_short }} · Resmi parti platformu</p>
+      <p><strong>{{ cms.party_name }}</strong> — {{ cms.text_footer_chairman|default('Genel Başkan') }}: {{ cms.chairman }}</p>
+      <p>© {{ cms.party_short }} · {{ cms.text_footer_copyright|default('Resmi parti platformu') }}</p>
     </div>
   </footer>
 

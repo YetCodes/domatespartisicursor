@@ -64,14 +64,25 @@
     });
   }
 
+  async function uploadImage(fileInput) {
+    if (!fileInput?.files?.[0]) return null;
+    const fd = new FormData();
+    fd.append("file", fileInput.files[0]);
+    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || "Yükleme hatası");
+    return data.url;
+  }
+
   const modal = document.getElementById("org-edit-modal");
   let currentNodeId = null;
 
-  function openModal(id, name, desc) {
+  function openModal(id, name, desc, img) {
     currentNodeId = id;
     document.getElementById("org-edit-id").value = id;
     document.getElementById("org-modal-name").value = name || "";
     document.getElementById("org-modal-desc").value = desc || "";
+    document.getElementById("org-modal-image").value = img || "";
     modal?.classList.add("open");
   }
 
@@ -82,7 +93,8 @@
       openModal(
         btn.dataset.id,
         node.querySelector(".node-name")?.textContent,
-        node.querySelector(".node-desc")?.textContent
+        node.querySelector(".node-desc")?.textContent,
+        node.querySelector("img")?.src || ""
       );
     });
   });
@@ -96,6 +108,10 @@
   });
 
   document.getElementById("org-add-btn")?.addEventListener("click", async () => {
+    const file = document.querySelector("#org-admin-panel .upload-file");
+    let imageUrl = document.getElementById("org-image-url")?.value || "";
+    if (file?.files?.[0]) imageUrl = (await uploadImage(file)) || imageUrl;
+
     const parentVal = document.getElementById("org-parent-id").value;
     const memberId = document.getElementById("org-member-id")?.value;
     await postOrg({
@@ -105,11 +121,16 @@
       person_name: document.getElementById("org-person-name").value,
       description: document.getElementById("org-description").value,
       user_id: memberId ? parseInt(memberId, 10) : null,
+      image_url: imageUrl
     });
     location.reload();
   });
 
   document.getElementById("org-modal-save")?.addEventListener("click", async () => {
+    const file = document.querySelector("#org-edit-modal .upload-file");
+    let imageUrl = document.getElementById("org-modal-image")?.value || "";
+    if (file?.files?.[0]) imageUrl = (await uploadImage(file)) || imageUrl;
+
     const node = document.querySelector(`.org-node[data-id="${currentNodeId}"]`);
     const memberSel = document.getElementById("org-modal-member");
     await postOrg({
@@ -119,6 +140,7 @@
       person_name: document.getElementById("org-modal-name").value,
       description: document.getElementById("org-modal-desc").value,
       user_id: memberSel?.value ? parseInt(memberSel.value, 10) : null,
+      image_url: imageUrl
     });
     location.reload();
   });

@@ -39,18 +39,24 @@ async function postJson(url, data) {
   return res.json();
 }
 
-const cmsSaveBtn = document.getElementById("cms-save-btn");
+const cmsSaveBtn = document.getElementById("cms-save-all");
 if (cmsSaveBtn) {
   cmsSaveBtn.addEventListener("click", async () => {
-    await postJson("/api/admin/cms", {
-      party_name: document.getElementById("cms-party_name").value,
-      party_short: document.getElementById("cms-party_short").value,
-      chairman: document.getElementById("cms-chairman").value,
-      vision_text: document.getElementById("cms-vision_text").value,
-      nav_home: document.getElementById("cms-nav_home").value,
-      nav_complaint: document.getElementById("cms-nav_complaint").value,
+    const data = {};
+    
+    // Tüm text ve textarea'ları topla
+    document.querySelectorAll("input[id^='cms-'], textarea[id^='cms-']").forEach(el => {
+      const key = el.id.replace("cms-", "");
+      if (key && key !== "save-all") data[key] = el.value;
     });
-    alert("CMS kaydedildi.");
+
+    // Checkbox'ları topla
+    document.querySelectorAll(".section-cb").forEach(cb => {
+      data[cb.dataset.key] = cb.checked ? "1" : "0";
+    });
+
+    await postJson("/api/admin/cms", data);
+    alert("Tüm site ayarları kaydedildi.");
   });
 }
 
@@ -286,4 +292,24 @@ document.querySelectorAll(".media-delete").forEach((btn) => {
     await postJson("/api/admin/media", { action: "delete", id: parseInt(btn.dataset.id, 10) });
     location.reload();
   });
+});
+
+document.getElementById("org-add-btn")?.addEventListener("click", async () => {
+  const file = document.getElementById("org-image-file");
+  let imageUrl = document.getElementById("org-image-url")?.value || "";
+  if (file?.files?.[0]) imageUrl = (await uploadImage(file)) || imageUrl;
+  
+  const parentVal = document.getElementById("org-parent-id").value;
+  const memberId = document.getElementById("org-member-id")?.value;
+  
+  await postJson("/api/admin/org", {
+    action: "add",
+    parent_id: parentVal ? parseInt(parentVal, 10) : null,
+    title: document.getElementById("org-title").value,
+    person_name: document.getElementById("org-person-name").value,
+    description: document.getElementById("org-description").value,
+    user_id: memberId ? parseInt(memberId, 10) : null,
+    image_url: imageUrl
+  });
+  location.reload();
 });

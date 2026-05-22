@@ -38,7 +38,41 @@
             <h4>Menü isimleri</h4>
             <div class="form-row"><label>Ana Sayfa</label><input id="cms-nav_home" value="{{ cms.nav_home }}"></div>
             <div class="form-row"><label>Haberler</label><input id="cms-nav_news" value="{{ cms.nav_news|default('Haberler') }}"></div>
-            <div class="form-row"><label>Şikayet</label><input id="cms-nav_complaint" value="{{ cms.nav_complaint }}"></div>
+              <div class="form-row"><label>Menü - Şikayet</label><input id="cms-nav_complaint" value="{{ cms.nav_complaint|default('Şikayet Kutusu') }}"></div>
+            </div>
+            
+            <h4 style="margin-top:1.5rem;">Marka & Logo (İsteğe Bağlı)</h4>
+            <div class="cms-grid">
+              <div class="form-row"><label>Site Logo URL</label><input id="cms-logo_url" value="{{ cms.logo_url|default('') }}" placeholder="Örn: /static/uploads/logo.png"></div>
+            </div>
+            
+            <h4 style="margin-top:1.5rem;">Sayfa Başlıkları ve Alt Metinler (Tamamen Dinamik)</h4>
+            <div class="cms-grid">
+              <div class="form-row"><label>Haberler Bölüm Başlığı</label><input id="cms-title_news_section" value="{{ cms.title_news_section|default('Güncel Haberler ve Medya') }}"></div>
+              <div class="form-row"><label>Haberler Alt Metni</label><input id="cms-text_news_subtitle" value="{{ cms.text_news_subtitle|default('Partimizden güncel gelişmeler, basın açıklamaları ve duyurular.') }}"></div>
+              <div class="form-row"><label>Yaklaşan Miting (Bento)</label><input id="cms-title_upcoming_event" value="{{ cms.title_upcoming_event|default('Yaklaşan Miting') }}"></div>
+              <div class="form-row"><label>Tüm Haberler Butonu</label><input id="cms-btn_all_news" value="{{ cms.btn_all_news|default('Tüm Haberler →') }}"></div>
+              <div class="form-row"><label>Basın Açıklamaları Başlığı</label><input id="cms-title_press_section" value="{{ cms.title_press_section|default('Son Basın Açıklamaları') }}"></div>
+              <div class="form-row"><label>Basın Açıklaması Yok Metni</label><input id="cms-text_empty_press" value="{{ cms.text_empty_press|default('Yakında eklenecek.') }}"></div>
+              <div class="form-row"><label>Miting Takvimi Başlığı</label><input id="cms-title_events_section" value="{{ cms.title_events_section|default('Miting Takvimi') }}"></div>
+              <div class="form-row"><label>Miting Takvimi Yok Metni</label><input id="cms-text_empty_events" value="{{ cms.text_empty_events|default('Etkinlik takvimi güncelleniyor.') }}"></div>
+              <div class="form-row"><label>Medya Galerisi Başlığı</label><input id="cms-title_media_section" value="{{ cms.title_media_section|default('Medya Galerisi') }}"></div>
+              <div class="form-row"><label>Parti Vizyonu Başlığı</label><input id="cms-title_vision_section" value="{{ cms.title_vision_section|default('Parti Vizyonu') }}"></div>
+              <div class="form-row"><label>Tüm Vaatler Butonu</label><input id="cms-btn_all_promises" value="{{ cms.btn_all_promises|default('Amaç ve Vaatler →') }}"></div>
+              <div class="form-row"><label>Üyeler Alt Metni</label><input id="cms-text_members_subtitle" value="{{ cms.text_members_subtitle|default('Partimize kayıtlı resmi üyeler ve yetkililer.') }}"></div>
+              <div class="form-row"><label>Vaatler Alt Metni</label><input id="cms-text_promises_subtitle" value="{{ cms.text_promises_subtitle|default('Partimizin iktidarında hayata geçireceği temel hedefler.') }}"></div>
+              <div class="form-row"><label>Gündem Bölüm Başlığı</label><input id="cms-title_agenda_section" value="{{ cms.title_agenda_section|default('Gündem ve Açıklamalar') }}"></div>
+              <div class="form-row"><label>Kadrolar Alt Metni</label><input id="cms-text_org_subtitle" value="{{ cms.text_org_subtitle|default('Yönetim kadrosu hiyerarşisi.') }}"></div>
+              <div class="form-row"><label>Genel Başkan Rozeti (Menü)</label><input id="cms-text_chairman_badge" value="{{ cms.text_chairman_badge|default('Genel Başkan') }}"></div>
+              <div class="form-row"><label>Kurultay Çağrısı Başlığı</label><input id="cms-title_congress" value="{{ cms.title_congress|default('Kurultay Çağrısı') }}"></div>
+              <div class="form-row"><label>Kurultay Alt Metni</label><input id="cms-text_congress_desc" value="{{ cms.text_congress_desc|default('Kurultay kararı için %61 evet oyu gerekir.') }}"></div>
+              <div class="form-row"><label>Kurultay 'Evet' Butonu</label><input id="cms-btn_congress_yes" value="{{ cms.btn_congress_yes|default('Evet') }}"></div>
+              <div class="form-row"><label>Kurultay 'Hayır' Butonu</label><input id="cms-btn_congress_no" value="{{ cms.btn_congress_no|default('Hayır') }}"></div>
+              <div class="form-row"><label>Footer 'Genel Başkan' Yazısı</label><input id="cms-text_footer_chairman" value="{{ cms.text_footer_chairman|default('Genel Başkan') }}"></div>
+              <div class="form-row"><label>Footer Telif Hakkı</label><input id="cms-text_footer_copyright" value="{{ cms.text_footer_copyright|default('Resmi parti platformu') }}"></div>
+            </div>
+
+            <h4 style="margin-top:1.5rem;">Butonlar & Eylemler</h4>
             <div class="form-row"><label>Üye Listesi</label><input id="cms-nav_members" value="{{ cms.nav_members }}"></div>
             <div class="form-row"><label>Amaç ve Vaatler</label><input id="cms-nav_promises" value="{{ cms.nav_promises }}"></div>
             <div class="form-row"><label>Kadrolar</label><input id="cms-nav_org" value="{{ cms.nav_org }}"></div>
@@ -281,7 +315,9 @@
             </div>
             <div class="form-row"><label>İsim (manuel)</label><input id="org-person-name"></div>
             <div class="form-row"><label>Açıklama</label><textarea id="org-description" rows="2"></textarea></div>
-            <button type="button" class="btn btn-premium" id="org-add-btn">Kadroya ekle</button>
+            <div class="form-row"><label>Özel Fotoğraf URL</label><input id="org-image-url" placeholder="Kişiye özel fotoğraf"></div>
+            <input type="file" id="org-image-file" accept="image/*" data-target="#org-image-url">
+            <button type="button" class="btn btn-premium" id="org-add-btn" style="margin-top:0.75rem;">Kadroya ekle</button>
           </div>
         </div>
 

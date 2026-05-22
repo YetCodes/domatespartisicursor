@@ -219,7 +219,7 @@ def members():
         ).fetchone()
         rows = conn.execute(
             """SELECT id, first_name, last_name, username, role, created_at FROM users
-               WHERE role IN ('member', 'official') ORDER BY first_name, last_name"""
+               WHERE role != 'admin' ORDER BY first_name, last_name"""
         ).fetchall()
         members_list = []
         if chairman:
@@ -652,8 +652,8 @@ def api_admin_org():
 
         if action == "add":
             conn.execute(
-                """INSERT INTO org_nodes (parent_id, title, person_name, description, sort_order, user_id)
-                   VALUES (?, ?, ?, ?, ?, ?)""",
+                """INSERT INTO org_nodes (parent_id, title, person_name, description, sort_order, user_id, image_url)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)""",
                 (
                     data.get("parent_id"),
                     data.get("title", "Yeni Makam"),
@@ -661,6 +661,7 @@ def api_admin_org():
                     data.get("description", ""),
                     data.get("sort_order", 0),
                     user_id,
+                    data.get("image_url", "")
                 ),
             )
         elif action == "delete":
@@ -668,7 +669,7 @@ def api_admin_org():
         elif action == "update":
             conn.execute(
                 """UPDATE org_nodes SET parent_id = ?, title = ?, person_name = ?,
-                   description = ?, sort_order = ?, user_id = ? WHERE id = ?""",
+                   description = ?, sort_order = ?, user_id = ?, image_url = ? WHERE id = ?""",
                 (
                     data.get("parent_id"),
                     data["title"],
@@ -676,6 +677,7 @@ def api_admin_org():
                     data.get("description", ""),
                     data.get("sort_order", 0),
                     user_id,
+                    data.get("image_url", ""),
                     data["id"],
                 ),
             )

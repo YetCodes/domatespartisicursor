@@ -61,6 +61,7 @@ def init_db():
                 title TEXT NOT NULL,
                 person_name TEXT DEFAULT '',
                 description TEXT DEFAULT '',
+                image_url TEXT DEFAULT '',
                 sort_order INTEGER DEFAULT 0,
                 FOREIGN KEY (parent_id) REFERENCES org_nodes(id) ON DELETE CASCADE
             );
@@ -239,6 +240,10 @@ def migrate_schema():
 
         try:
             conn.execute("ALTER TABLE org_nodes ADD COLUMN user_id INTEGER REFERENCES users(id)")
+        except Exception:
+            pass
+        try:
+            conn.execute("ALTER TABLE org_nodes ADD COLUMN image_url TEXT DEFAULT ''")
         except Exception:
             pass
         try:

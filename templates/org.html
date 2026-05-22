@@ -4,8 +4,8 @@
 {% block content %}
 <section class="section-pad" style="padding-top:6rem;">
   <div class="container">
-    <h1 class="section-title reveal">{{ cms.nav_org }}</h1>
-    <p class="reveal">Yönetim kadrosu hiyerarşisi. {% if not is_chairman %}Salt okunur görünüm.{% else %}Düzenleme modu aktif.{% endif %}</p>
+    <h1 class="section-title reveal">{{ cms.nav_org|default('Kadrolar') }}</h1>
+    <p class="reveal">{{ cms.text_org_subtitle|default('Yönetim kadrosu hiyerarşisi.') }} {% if not is_chairman %}Salt okunur görünüm.{% else %}Düzenleme modu aktif.{% endif %}</p>
 
     <div class="org-viewport reveal" id="org-viewport">
       <div class="org-zoom-controls">
@@ -22,6 +22,7 @@
           </div>
           <div class="node-title">{{ node.title }}</div>
           {% if node.person_name %}<div class="node-name">{{ node.person_name }}</div>{% endif %}
+          {% if node.image_url %}<img src="{{ node.image_url }}" alt="{{ node.person_name }}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin-top:0.5rem;border:2px solid var(--blood-wine);">{% endif %}
           {% if node.description %}<div class="node-desc">{{ node.description }}</div>{% endif %}
         </div>
         {% if node.children %}
@@ -57,7 +58,9 @@
       </div>
       <div class="form-row"><label>İsim (manuel)</label><input type="text" id="org-person-name" placeholder="Üye seçilmezse yazın"></div>
       <div class="form-row"><label>Açıklama</label><textarea id="org-description" rows="2"></textarea></div>
-      <button type="button" class="btn btn-premium" id="org-add-btn">Ekle</button>
+      <div class="form-row"><label>Özel Fotoğraf URL</label><input type="text" id="org-image-url" placeholder="Kişiye özel fotoğraf"></div>
+      <input type="file" class="upload-file" accept="image/*" data-target="#org-image-url">
+      <button type="button" class="btn btn-premium" id="org-add-btn" style="margin-top:0.75rem;">Ekle</button>
     </div>
   </div>
 </section>
@@ -77,7 +80,9 @@
     </div>
     <div class="form-row"><label>İsim</label><input type="text" id="org-modal-name"></div>
     <div class="form-row"><label>Açıklama</label><textarea id="org-modal-desc" rows="3"></textarea></div>
-    <div class="modal-actions">
+    <div class="form-row"><label>Fotoğraf URL</label><input type="text" id="org-modal-image"></div>
+    <input type="file" class="upload-file" accept="image/*" data-target="#org-modal-image">
+    <div class="modal-actions" style="margin-top:1rem;">
       <button type="button" class="btn btn-premium" id="org-modal-save">Kaydet</button>
       <button type="button" class="btn btn-glass" id="org-modal-delete">Kaldır</button>
       <button type="button" class="btn btn-glass" id="org-modal-close">İptal</button>

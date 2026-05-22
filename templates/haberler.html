@@ -4,7 +4,8 @@
 {% block content %}
 <section class="section-pad" style="padding-top:6rem;">
   <div class="container">
-    <h1 class="section-title reveal">Güncel Haberler ve Medya</h1>
+    <h1 class="section-title reveal">{{ cms.nav_news|default('Haberler') }}</h1>
+    <p class="reveal">{{ cms.text_news_subtitle|default('Partimizden güncel gelişmeler, basın açıklamaları ve duyurular.') }}</p>
 
     <div class="bento-grid reveal" style="grid-template-rows: repeat(2, 180px); margin-bottom:3rem;">
       {% for article in news[:4] %}
@@ -51,7 +52,7 @@
       </div>
     </div>
 
-    <h2 class="section-title reveal" style="margin-top:3rem;">Medya Galerisi</h2>
+    <h2 class="section-title reveal" style="margin-top:4rem;">{{ cms.title_press_section|default('Basın Açıklamaları') }}</h2>
     <div class="media-grid reveal">
       {% for m in media %}
       <div class="media-card glass-card" style="padding:0;overflow:hidden;">
