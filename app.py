@@ -420,7 +420,6 @@ def admin_panel():
         promises=[dict(p) for p in promises],
         complaints=[dict(c) for c in complaints],
         notifications=[dict(n) for n in notifications],
-        cms=cms,
         member_options=member_options,
         all_users=[dict(u) for u in all_users],
         assignable_roles=db.CHAIRMAN_ASSIGNABLE_ROLES,
