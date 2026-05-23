@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+dop.db
+dop.db-journal
+static/uploads/
