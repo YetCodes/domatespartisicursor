@@ -160,6 +160,24 @@ def migrate_schema():
     """Mevcut veritabanlarına yeni tablolar ve CMS anahtarları ekler."""
     with get_db() as conn:
         init_db()
+
+        # Rütbe (role) kuralını güncelle ('official' eklendi)
+        schema = conn.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='users'").fetchone()[0]
+        if "'official'" not in schema:
+            conn.execute("ALTER TABLE users RENAME TO users_old")
+            conn.execute('''
+                CREATE TABLE users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT UNIQUE NOT NULL,
+                    password_hash TEXT NOT NULL,
+                    role TEXT NOT NULL CHECK(role IN ('admin', 'official', 'member', 'citizen')),
+                    first_name TEXT NOT NULL,
+                    last_name TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                )
+            ''')
+            conn.execute("INSERT INTO users SELECT * FROM users_old")
+            conn.execute("DROP TABLE users_old")
         defaults = {
             "nav_news": "Haberler ve Medya",
             "nav_admin": "Genel Başkan Paneli",

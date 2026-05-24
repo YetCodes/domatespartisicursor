@@ -319,7 +319,7 @@
             <h4>Kayıtlı kişiler — rütbe değiştir</h4>
             <p style="font-size:0.88rem;color:var(--text-muted);">Üye, Yetkili veya Vatandaş yapabilirsiniz. Genel Başkan atanamaz; kimse kendi rütbesini yükseltemez.</p>
             <table class="members-table">
-              <thead><tr><th>Ad</th><th>Soyad</th><th>Kullanıcı</th><th>Rütbe</th></tr></thead>
+              <thead><tr><th>Ad</th><th>Soyad</th><th>Kullanıcı</th><th>Rütbe</th><th>İşlem</th></tr></thead>
               <tbody>
                 {% for u in all_users %}
                 <tr>
@@ -335,6 +335,11 @@
                       <option value="official" {% if u.role=='official' %}selected{% endif %}>Yetkili</option>
                       <option value="citizen" {% if u.role=='citizen' %}selected{% endif %}>Vatandaş</option>
                     </select>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if u.role != 'admin' %}
+                    <button class="btn btn-danger-soft user-delete" data-id="{{ u.id }}" style="padding:0.25rem 0.6rem;font-size:0.75rem;">Sil</button>
                     {% endif %}
                   </td>
                 </tr>

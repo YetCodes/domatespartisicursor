@@ -64,4 +64,18 @@
   document.querySelectorAll(".panel-role-select").forEach((sel) => {
     sel.addEventListener("change", () => changeRole(sel));
   });
+
+  document.querySelectorAll(".user-delete").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (!confirm("Kullanıcıyı tamamen silmek istediğinize emin misiniz? Bu işlem geri alınamaz.")) return;
+      const res = await fetch(`/api/admin/user/${btn.dataset.id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.ok) {
+        alert("Kullanıcı başarıyla silindi.");
+        btn.closest("tr").remove();
+      } else {
+        alert(data.error || "Hata oluştu.");
+      }
+    });
+  });
 })();

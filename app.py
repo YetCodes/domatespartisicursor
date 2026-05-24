@@ -17,6 +17,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 from PIL import Image
 
+from datetime import timedelta
 import database as db
 from config import (
     ALLOWED_EXTENSIONS,
@@ -29,7 +30,13 @@ from config import (
 app = Flask(__name__)
 app.secret_key = "dop-domates-partisi-dev-key-change-in-production"
 app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_MB * 1024 * 1024
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=30)
 UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
+
+# Sunucu her başladığında/yenilendiğinde tabloların olduğundan emin ol
+db.init_db()
+db.seed_if_empty()
+db.migrate_schema()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -378,7 +385,7 @@ def login():
         with db.get_db() as conn:
             row = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
         if row and check_password_hash(row["password_hash"], password):
-            login_user(User(row))
+            login_user(User(row), remember=True)
             if row["role"] == "admin":
                 flash("Genel Başkan olarak giriş yaptınız.", "success")
             else:
@@ -839,6 +846,19 @@ def api_admin_user_role():
     return jsonify({"ok": True, "role": new_role, "role_label": db.ROLE_LABELS.get(new_role)})
 
 
+@app.route("/api/admin/user/<int:user_id>", methods=["DELETE"])
+@chairman_required
+def api_admin_delete_user(user_id):
+    with db.get_db() as conn:
+        target = conn.execute("SELECT role FROM users WHERE id = ?", (user_id,)).fetchone()
+        if not target:
+            return jsonify({"error": "Kullanıcı bulunamadı."}), 404
+        if target["role"] == "admin":
+            return jsonify({"error": "Genel Başkan silinemez."}), 403
+        conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
+    return jsonify({"ok": True})
+
+
 @app.route("/api/admin/notifications/read", methods=["POST"])
 @chairman_required
 def api_notifications_read():
@@ -852,7 +872,4 @@ def api_notifications_read():
 
 
 if __name__ == "__main__":
-    db.init_db()
-    db.seed_if_empty()
-    db.migrate_schema()
     app.run(debug=True, port=5000)
