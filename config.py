@@ -3,8 +3,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
 UPLOAD_FOLDER = BASE_DIR / "static" / "uploads"
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
-MAX_UPLOAD_MB = 8
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp", "mp4", "webm", "ogg"}
+MAX_UPLOAD_MB = 50
 
 # Genel Başkan hesabı (yalnızca bu kullanıcı adı CMS yetkisine sahip)
 CHAIRMAN_USERNAME = "genelbaskan"

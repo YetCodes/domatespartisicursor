@@ -175,15 +175,21 @@ def save_upload(file_storage):
     stamp = db.utc_now().replace(":", "").replace("-", "")[:15]
     dest = UPLOAD_FOLDER / f"{stamp}_{name}"
     
-    try:
-        img = Image.open(file_storage)
-        img.thumbnail((1920, 1080), Image.Resampling.LANCZOS)
-        # Convert to RGB if necessary before saving as JPEG/WEBP
-        if img.mode in ('RGBA', 'P') and dest.suffix.lower() in ('.jpg', '.jpeg'):
-            img = img.convert('RGB')
-        img.save(dest, optimize=True, quality=70)
-    except Exception as e:
-        return None
+    ext = dest.suffix.lower()
+    if ext in ('.mp4', '.webm', '.ogg'):
+        try:
+            file_storage.save(dest)
+        except Exception:
+            return None
+    else:
+        try:
+            img = Image.open(file_storage)
+            img.thumbnail((1920, 1080), Image.Resampling.LANCZOS)
+            if img.mode in ('RGBA', 'P') and dest.suffix.lower() in ('.jpg', '.jpeg'):
+                img = img.convert('RGB')
+            img.save(dest, optimize=True, quality=70)
+        except Exception as e:
+            return None
 
     return url_for("static", filename=f"uploads/{dest.name}")
 
@@ -696,7 +702,7 @@ def api_admin_upload():
     f = request.files.get("file")
     url = save_upload(f)
     if not url:
-        return jsonify({"error": "Geçersiz dosya. PNG, JPG, WEBP yükleyin."}), 400
+        return jsonify({"error": "Geçersiz dosya. Lütfen fotoğraf (PNG, JPG, WEBP) veya video (MP4) yükleyin."}), 400
     return jsonify({"ok": True, "url": url})
 
 

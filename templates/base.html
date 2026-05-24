@@ -22,9 +22,8 @@
         <span class="brand-logo">{{ cms.party_short[:3] }}</span>
         {% endif %}
         <span>{{ cms.party_short }}</span>
-        {% if is_chairman %}<span class="chairman-badge">{{ cms.text_chairman_badge|default('Genel Başkan') }}</span>{% endif %}
       </a>
-      <nav>
+      <nav style="flex-grow: 1; display: flex; justify-content: flex-end;">
         <ul class="main-nav" id="main-nav">
           <li><a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">{{ cms.nav_home }}</a></li>
           <li><a href="{{ url_for('news_media') }}" class="{% if request.endpoint == 'news_media' %}active{% endif %}">{{ cms.nav_news|default('Haberler') }}</a></li>
@@ -33,7 +32,7 @@
           <li><a href="{{ url_for('promises_page') }}" class="{% if request.endpoint == 'promises_page' %}active{% endif %}">{{ cms.nav_promises }}</a></li>
           <li><a href="{{ url_for('org_chart') }}" class="{% if request.endpoint == 'org_chart' %}active{% endif %}">{{ cms.nav_org }}</a></li>
           {% if is_chairman %}
-          <li class="admin-only"><a href="{{ url_for('admin_panel') }}" class="{% if request.endpoint == 'admin_panel' %}active{% endif %}">{{ cms.nav_admin|default('Panel') }}</a></li>
+          <li class="admin-only"><a href="{{ url_for('admin_panel') }}" class="{% if request.endpoint == 'admin_panel' %}active{% endif %}">Yönetim</a></li>
           {% endif %}
         </ul>
       </nav>

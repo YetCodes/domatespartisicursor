@@ -263,11 +263,11 @@
               </select>
             </div>
             <div class="form-row">
-              <label>Cihazdan Fotoğraf Yükle</label>
-              <input type="file" class="upload-file" accept="image/*" data-target=".media-image[data-id='{{ m.id }}']">
+              <label>Cihazdan Dosya (Fotoğraf / Video) Yükle</label>
+              <input type="file" class="upload-file" accept="image/*,video/*" data-target-img=".media-image[data-id='{{ m.id }}']" data-target-vid=".media-video[data-id='{{ m.id }}']">
             </div>
             <div class="form-row"><label>veya Harici Görsel URL</label><input class="media-image" data-id="{{ m.id }}" value="{{ m.image_url }}"></div>
-            <div class="form-row"><label>Video URL (Sadece YouTube/Cloudinary Dış Link)</label><input class="media-video" data-id="{{ m.id }}" value="{{ m.video_url|default('') }}"></div>
+            <div class="form-row"><label>veya Harici Video URL (YouTube vb.)</label><input class="media-video" data-id="{{ m.id }}" value="{{ m.video_url|default('') }}"></div>
             <div class="cms-card-actions" style="margin-top:1rem;">
               <button class="btn btn-premium media-update" data-id="{{ m.id }}">Kaydet</button>
               <button class="btn btn-danger-soft media-delete" data-id="{{ m.id }}">Sil</button>
@@ -284,11 +284,11 @@
               </select>
             </div>
             <div class="form-row">
-              <label>Cihazdan Fotoğraf Yükle (Fotoğraf seçildiyse)</label>
-              <input type="file" id="new-media-file" accept="image/*" data-target="#new-media-image">
+              <label>Cihazdan Dosya Yükle</label>
+              <input type="file" id="new-media-file" class="upload-file" accept="image/*,video/*" data-target-img="#new-media-image" data-target-vid="#new-media-video">
             </div>
             <div class="form-row"><label>veya Harici Görsel URL</label><input id="new-media-image" placeholder="https://..."></div>
-            <div class="form-row"><label>Video URL (Video seçildiyse - YouTube vb.)</label><input id="new-media-video" placeholder="Video URL (YouTube veya Cloudinary)"></div>
+            <div class="form-row"><label>veya Harici Video URL</label><input id="new-media-video" placeholder="https://... (MP4, YouTube)"></div>
             <button class="btn btn-premium" id="new-media-add" style="margin-top:0.75rem;">Medya ekle</button>
 
           </div>

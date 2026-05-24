@@ -9,16 +9,24 @@ async function uploadImage(fileInput) {
 }
 
 function bindUploadInputs() {
-  document.querySelectorAll(".upload-file, input[type=file][data-target]").forEach((input) => {
+  document.querySelectorAll(".upload-file, input[type=file][data-target], input[type=file][data-target-img]").forEach((input) => {
     input.addEventListener("change", async () => {
+      const isVideo = input.files[0]?.type.startsWith('video/');
       const sel = input.dataset.target;
       const target = sel ? document.querySelector(sel) : null;
-      if (!target) return;
+      const targetImg = input.dataset.targetImg ? document.querySelector(input.dataset.targetImg) : null;
+      const targetVid = input.dataset.targetVid ? document.querySelector(input.dataset.targetVid) : null;
+      
       try {
         const url = await uploadImage(input);
         if (url) {
-          target.value = url;
-          alert("Fotoğraf yüklendi.");
+          if (targetImg && targetVid) {
+             if (isVideo) targetVid.value = url;
+             else targetImg.value = url;
+          } else if (target) {
+             target.value = url;
+          }
+          alert("Dosya yüklendi.");
         }
       } catch (e) {
         alert(e.message);
