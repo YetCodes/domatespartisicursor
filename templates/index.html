@@ -22,7 +22,7 @@
     <div class="carousel-track" id="carousel-track">
       {% for slide in slides %}
       <div class="carousel-slide{% if loop.first %} active{% endif %}">
-        <img src="{{ slide.image_url }}" alt="{{ slide.headline }}" data-headline="{{ slide.headline }}">
+        <img src="{{ slide.image_url }}" alt="{{ slide.headline }}" data-headline="{{ slide.headline }}" style="object-position: center 20%;">
         <div class="hero-overlay"></div>
       </div>
       {% endfor %}

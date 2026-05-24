@@ -86,20 +86,20 @@
             <h4>Genel Başkan mesajı (ana sayfa kutusu)</h4>
             <div class="form-row"><label>Başlık</label><input id="cms-chairman_message_title" value="{{ cms.chairman_message_title|default('') }}"></div>
             <div class="form-row"><label>Metin</label><textarea id="cms-chairman_message_body" rows="3">{{ cms.chairman_message_body|default('') }}</textarea></div>
-            <div class="form-row"><label>Facebook URL</label><input type="text" class="setting-input" data-key="social_facebook" value="{{ cms.social_facebook|default('') }}"></div>
-            <div class="form-row"><label>Instagram URL</label><input type="text" class="setting-input" data-key="social_instagram" value="{{ cms.social_instagram|default('') }}"></div>
+            <div class="form-row"><label>Facebook URL</label><input type="text" id="cms-social_facebook" value="{{ cms.social_facebook|default('') }}"></div>
+            <div class="form-row"><label>Instagram URL</label><input type="text" id="cms-social_instagram" value="{{ cms.social_instagram|default('') }}"></div>
           </div>
           
           <div class="cms-card">
             <h4>Atatürk ve Gençliğe Hitabe</h4>
             <div class="form-row">
               <label>Cihazdan Fotoğraf Yükle</label>
-              <input type="file" class="upload-file" accept="image/*" data-target=".setting-input[data-key='ataturk_image']">
+              <input type="file" class="upload-file" accept="image/*" data-target="#cms-ataturk_image">
             </div>
-            <div class="form-row"><label>veya Harici Görsel URL</label><input type="text" class="setting-input" data-key="ataturk_image" value="{{ cms.ataturk_image|default('https://i.hizliresim.com/qcjb7q4.jpg') }}"></div>
-            <div class="form-row"><label>Başlık</label><input type="text" class="setting-input" data-key="ataturk_title" value="{{ cms.ataturk_title|default('Atatürk\'ün Gençliğe Hitabesi') }}"></div>
-            <div class="form-row"><label>Metin</label><textarea class="setting-input" data-key="ataturk_body" rows="6">{{ cms.ataturk_body|default('Ey Türk gençliği! ...') }}</textarea></div>
-            <div class="form-row"><label>İmza</label><input type="text" class="setting-input" data-key="ataturk_signature" value="{{ cms.ataturk_signature|default('Mustafa Kemal Atatürk') }}"></div>
+            <div class="form-row"><label>veya Harici Görsel URL</label><input type="text" id="cms-ataturk_image" value="{{ cms.ataturk_image|default('https://i.hizliresim.com/qcjb7q4.jpg') }}"></div>
+            <div class="form-row"><label>Başlık</label><input type="text" id="cms-ataturk_title" value="{{ cms.ataturk_title|default('Atatürk\'ün Gençliğe Hitabesi') }}"></div>
+            <div class="form-row"><label>Metin</label><textarea id="cms-ataturk_body" rows="6">{{ cms.ataturk_body|default('Ey Türk gençliği! ...') }}</textarea></div>
+            <div class="form-row"><label>İmza</label><input type="text" id="cms-ataturk_signature" value="{{ cms.ataturk_signature|default('Mustafa Kemal Atatürk') }}"></div>
           </div>
 
           <div class="cms-card">
