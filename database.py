@@ -179,6 +179,12 @@ def migrate_schema():
             conn.execute("INSERT INTO users SELECT * FROM users_old")
             conn.execute("DROP TABLE users_old")
         defaults = {
+            "text_hero": "Ülkeyi daha iyi yarınlara taşımak için buradayız.",
+            "text_chairman_badge": "Genel Başkan",
+            "ataturk_image": "https://i.hizliresim.com/qcjb7q4.jpg",
+            "ataturk_title": "Atatürk'ün Gençliğe Hitabesi",
+            "ataturk_body": "Ey Türk gençliği! Birinci vazifen; Türk istiklalini, Türk cumhuriyetini, ilelebet muhafaza ve müdafaa etmektir.\n\nMevcudiyetinin ve istikbalinin yegâne temeli budur. Bu temel, senin en kıymetli hazinendir. İstikbalde dahi seni bu hazineden mahrum etmek isteyecek dâhilî ve haricî bedhahların olacaktır...\n\nMuhtaç olduğun kudret, damarlarındaki asil kanda mevcuttur!",
+            "ataturk_signature": "Mustafa Kemal Atatürk",
             "nav_news": "Haberler ve Medya",
             "nav_admin": "Genel Başkan Paneli",
             "cta_donate": "Bağış Yap",

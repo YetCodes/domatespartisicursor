@@ -86,11 +86,24 @@
             <h4>Genel Başkan mesajı (ana sayfa kutusu)</h4>
             <div class="form-row"><label>Başlık</label><input id="cms-chairman_message_title" value="{{ cms.chairman_message_title|default('') }}"></div>
             <div class="form-row"><label>Metin</label><textarea id="cms-chairman_message_body" rows="3">{{ cms.chairman_message_body|default('') }}</textarea></div>
-            <div class="form-row"><label>DOP TV başlık</label><input id="cms-dop_tv_title" value="{{ cms.dop_tv_title|default('DOP TV') }}"></div>
-            <div class="form-row"><label>DOP TV açıklama</label><input id="cms-dop_tv_description" value="{{ cms.dop_tv_description|default('') }}"></div>
+            <div class="form-row"><label>Facebook URL</label><input type="text" class="setting-input" data-key="social_facebook" value="{{ cms.social_facebook|default('') }}"></div>
+            <div class="form-row"><label>Instagram URL</label><input type="text" class="setting-input" data-key="social_instagram" value="{{ cms.social_instagram|default('') }}"></div>
           </div>
+          
           <div class="cms-card">
-            <h4>Ana sayfa bölümleri (kapat = siteden tamamen kalkar)</h4>
+            <h4>Atatürk ve Gençliğe Hitabe</h4>
+            <div class="form-row">
+              <label>Cihazdan Fotoğraf Yükle</label>
+              <input type="file" class="upload-file" accept="image/*" data-target=".setting-input[data-key='ataturk_image']">
+            </div>
+            <div class="form-row"><label>veya Harici Görsel URL</label><input type="text" class="setting-input" data-key="ataturk_image" value="{{ cms.ataturk_image|default('https://i.hizliresim.com/qcjb7q4.jpg') }}"></div>
+            <div class="form-row"><label>Başlık</label><input type="text" class="setting-input" data-key="ataturk_title" value="{{ cms.ataturk_title|default('Atatürk\'ün Gençliğe Hitabesi') }}"></div>
+            <div class="form-row"><label>Metin</label><textarea class="setting-input" data-key="ataturk_body" rows="6">{{ cms.ataturk_body|default('Ey Türk gençliği! ...') }}</textarea></div>
+            <div class="form-row"><label>İmza</label><input type="text" class="setting-input" data-key="ataturk_signature" value="{{ cms.ataturk_signature|default('Mustafa Kemal Atatürk') }}"></div>
+          </div>
+
+          <div class="cms-card">
+            <h4>Bölüm Görünümleri (kapat = siteden tamamen kalkar)</h4>
             <div class="section-toggles">
               <label class="section-toggle"><input type="checkbox" class="section-cb" data-key="section_show_hero" {% if cms.section_show_hero|default('1') != '0' %}checked{% endif %}> Manşet / Hero</label>
               <label class="section-toggle"><input type="checkbox" class="section-cb" data-key="section_show_bento" {% if cms.section_show_bento|default('1') != '0' %}checked{% endif %}> Haber Bento</label>
@@ -111,12 +124,12 @@
             {% if s.image_url %}<img src="{{ s.image_url }}" class="preview-thumb" alt="">{% endif %}
             <div class="form-row">
               <label>Cihazdan Fotoğraf Yükle</label>
-              <input type="file" class="upload-file" accept="image/*" data-target=".slide-image" style="margin-bottom:0.5rem;">
+              <input type="file" class="upload-file" accept="image/*" data-target=".slide-image[data-id='{{ s.id }}']" style="margin-bottom:0.5rem;">
               <small style="color:var(--text-muted);">veya</small>
             </div>
             <div class="form-row">
               <label>Harici Görsel URL</label>
-              <input class="slide-image" value="{{ s.image_url }}">
+              <input class="slide-image" data-id="{{ s.id }}" value="{{ s.image_url }}">
             </div>
             <div class="form-row"><label>Başlık</label><input class="slide-headline" value="{{ s.headline }}"></div>
             <div class="cms-card-actions">

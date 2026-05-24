@@ -82,12 +82,12 @@ document.getElementById("new-slide-add")?.addEventListener("click", async () => 
 
 document.querySelectorAll(".slide-update").forEach((btn) => {
   btn.addEventListener("click", async () => {
-    const row = btn.closest(".form-row");
+    const id = btn.dataset.id;
     await postJson("/api/admin/carousel", {
       action: "update",
-      id: parseInt(btn.dataset.id, 10),
-      image_url: row.querySelector(".slide-image").value,
-      headline: row.querySelector(".slide-headline").value,
+      id: parseInt(id, 10),
+      image_url: document.querySelector(`.slide-image[data-id="${id}"]`).value,
+      headline: document.querySelector(`.slide-headline[data-id="${id}"]`).value,
     });
     alert("Manşet güncellendi");
   });
