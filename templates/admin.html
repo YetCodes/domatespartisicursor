@@ -91,12 +91,23 @@
           </div>
           
           <div class="cms-card">
+            <h4>Site Teması ve Renkler</h4>
+            <div class="form-row"><label>Ana Tema Rengi (Kırmızı vb.)</label><input type="color" id="cms-theme_primary_color" value="{{ cms.theme_primary_color|default('#E30A17') }}" style="width: 50px; height: 30px; padding: 0;"></div>
+            <div class="form-row"><label>Site Arka Plan Rengi</label><input type="color" id="cms-theme_bg_color" value="{{ cms.theme_bg_color|default('#fdfdfd') }}" style="width: 50px; height: 30px; padding: 0;"></div>
+            <div class="form-row"><label>Genel Yazı Rengi</label><input type="color" id="cms-theme_text_color" value="{{ cms.theme_text_color|default('#333333') }}" style="width: 50px; height: 30px; padding: 0;"></div>
+          </div>
+
+          <div class="cms-card">
             <h4>Atatürk ve Gençliğe Hitabe</h4>
             <div class="form-row">
-              <label>Cihazdan Fotoğraf Yükle</label>
+              <label>Arka Plan Bayrak/Görsel URL</label>
+              <input type="text" id="cms-ataturk_bg_image" value="{{ cms.ataturk_bg_image|default('https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg') }}">
+            </div>
+            <div class="form-row">
+              <label>Cihazdan Fotoğraf Yükle (Portre)</label>
               <input type="file" class="upload-file" accept="image/*" data-target="#cms-ataturk_image">
             </div>
-            <div class="form-row"><label>veya Harici Görsel URL</label><input type="text" id="cms-ataturk_image" value="{{ cms.ataturk_image|default('https://i.hizliresim.com/qcjb7q4.jpg') }}"></div>
+            <div class="form-row"><label>veya Harici Görsel URL (Portre)</label><input type="text" id="cms-ataturk_image" value="{{ cms.ataturk_image|default('https://i.hizliresim.com/qcjb7q4.jpg') }}"></div>
             <div class="form-row"><label>Başlık</label><input type="text" id="cms-ataturk_title" value="{{ cms.ataturk_title|default('Atatürk\'ün Gençliğe Hitabesi') }}"></div>
             <div class="form-row"><label>Metin</label><textarea id="cms-ataturk_body" rows="6">{{ cms.ataturk_body|default('Ey Türk gençliği! ...') }}</textarea></div>
             <div class="form-row"><label>İmza</label><input type="text" id="cms-ataturk_signature" value="{{ cms.ataturk_signature|default('Mustafa Kemal Atatürk') }}"></div>
