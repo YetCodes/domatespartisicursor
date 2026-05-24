@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section class="section-pad reveal" style="padding-top:6rem; padding-bottom:2rem; background-color: var(--bg-body);">
-  <div class="container" style="display:flex; flex-wrap:wrap; gap:2rem; align-items:stretch; justify-content:center;">
-    <div style="flex:1; min-width:300px; max-width:300px; display:flex; justify-content:center;">
-      <img src="{{ cms.ataturk_image|default('https://i.hizliresim.com/qcjb7q4.jpg') }}" alt="Mustafa Kemal Atatürk" style="width:300px; height:300px; aspect-ratio:1/1; object-fit:cover; object-position:center top; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+<section class="section-pad reveal" style="min-height: 85vh; padding-top: 8rem; padding-bottom: 4rem; background-color: var(--bg-body); display: flex; align-items: center;">
+  <div class="container" style="display:flex; flex-wrap:wrap; gap:3rem; align-items:center; justify-content:center; width: 100%;">
+    <div style="flex:1; min-width:300px; max-width:400px; display:flex; justify-content:center;">
+      <img src="{{ cms.ataturk_image|default('https://i.hizliresim.com/qcjb7q4.jpg') }}" alt="Mustafa Kemal Atatürk" style="width:100%; max-width: 400px; aspect-ratio:1/1; object-fit:cover; object-position:center top; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.15);">
     </div>
-    <div style="flex:1; min-width:300px; max-width:500px; display:flex; flex-direction:column; justify-content:center; padding:2rem; background:var(--bg-card); border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.05); border-left: 4px solid var(--primary-color);">
+    <div style="flex:1.5; min-width:300px; max-width:600px; display:flex; flex-direction:column; justify-content:center; padding:3rem; background:var(--bg-card); border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.05); border-left: 4px solid var(--primary-color);">
       <h2 style="font-size:1.5rem; color:var(--primary-color); margin-bottom:1rem; text-align:center;">{{ cms.ataturk_title|default("Atatürk'ün Gençliğe Hitabesi") }}</h2>
       <div style="font-size:0.95rem; line-height:1.6; font-style:italic; color:var(--text-dark); white-space:pre-wrap;">{{ cms.ataturk_body|default("Ey Türk gençliği! Birinci vazifen; Türk istiklalini, Türk cumhuriyetini, ilelebet muhafaza ve müdafaa etmektir.\n\nMevcudiyetinin ve istikbalinin yegâne temeli budur. Bu temel, senin en kıymetli hazinendir. İstikbalde dahi seni bu hazineden mahrum etmek isteyecek dâhilî ve haricî bedhahların olacaktır...\n\nMuhtaç olduğun kudret, damarlarındaki asil kanda mevcuttur!") }}</div>
       <div style="margin-top:1.5rem; text-align:right; font-weight:bold; color:var(--text-dark);">

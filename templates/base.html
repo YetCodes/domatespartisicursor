@@ -15,16 +15,17 @@
   <div class="nav-spacer"></div>
   <div class="floating-nav-wrap" id="floating-nav">
     <header class="floating-nav">
-      <a href="{{ url_for('index') }}" class="brand">
-        {% if cms.logo_url %}
-        <img src="{{ cms.logo_url }}" alt="Logo" class="brand-logo-img" style="height:32px; object-fit:contain; border-radius:4px;">
-        {% else %}
-        <span class="brand-logo">{{ cms.party_short[:3] }}</span>
-        {% endif %}
-        <span>{{ cms.party_short }}</span>
-      </a>
-      <nav style="flex-grow: 1; display: flex; justify-content: flex-end;">
-        <ul class="main-nav" id="main-nav">
+      <div style="display:flex; align-items:center; gap:2rem;">
+        <a href="{{ url_for('index') }}" class="brand">
+          {% if cms.logo_url %}
+          <img src="{{ cms.logo_url }}" alt="Logo" class="brand-logo-img" style="height:32px; object-fit:contain; border-radius:4px;">
+          {% else %}
+          <span class="brand-logo">{{ cms.party_short[:3] }}</span>
+          {% endif %}
+          <span>{{ cms.party_short }}</span>
+        </a>
+        <nav>
+          <ul class="main-nav" id="main-nav">
           <li><a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">{{ cms.nav_home }}</a></li>
           <li><a href="{{ url_for('news_media') }}" class="{% if request.endpoint == 'news_media' %}active{% endif %}">{{ cms.nav_news|default('Haberler') }}</a></li>
           <li><a href="{{ url_for('complaint') }}" class="{% if request.endpoint == 'complaint' %}active{% endif %}">{{ cms.nav_complaint }}</a></li>
@@ -35,7 +36,8 @@
           <li class="admin-only"><a href="{{ url_for('admin_panel') }}" class="{% if request.endpoint == 'admin_panel' %}active{% endif %}">Yönetim</a></li>
           {% endif %}
         </ul>
-      </nav>
+        </nav>
+      </div>
       <div class="nav-icons">
         <button type="button" class="icon-btn" id="nav-toggle" aria-label="Menü">☰</button>
         {% if current_user.is_authenticated %}
